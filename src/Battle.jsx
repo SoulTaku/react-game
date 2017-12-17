@@ -11,7 +11,7 @@ class Battle extends Component {
     }
   }
 
-  enemyAction(h) {
+  enemyAction(h, a=-1) {
     let e = Math.floor(Math.random() * 100 % 4 + 1);
     if (e !== 1 || this.state.enemyMana < 10 || this.state.enemyHealth > 90) {
       let damage = Math.floor(Math.random() * 100 % 7 + 1);
@@ -35,15 +35,25 @@ class Battle extends Component {
             playerHealth: this.state.playerHealth - damage
           });
         }
-        console.log('damage taken: ', damage);
       }
     }
     else {
       let heal = Math.floor(Math.random() * 100 % 10 + 1);
-      this.setState({
-        enemyHealth: this.state.enemyHealth + heal,
-        enemyMana: this.state.enemyMana - 10
-      });
+      console.log('enemy hp', this.state.enemyHealth)
+      console.log('enemy heal', heal);
+      console.log('attacked', a);
+      if (a !== -1) {
+        this.setState({
+          enemyHealth: this.state.enemyHealth + heal - a,
+          enemyMana: this.state.enemyMana - 10
+        })
+      }
+      else {
+        this.setState({
+          enemyHealth: this.state.enemyHealth + heal,
+          enemyMana: this.state.enemyMana - 10
+        });
+      }
     }
   }
 
@@ -62,7 +72,7 @@ class Battle extends Component {
       this.setState({
         enemyHealth: this.state.enemyHealth - damage
       });
-      this.enemyAction(false);
+      this.enemyAction(false, damage);
     }
   }
 
@@ -72,13 +82,11 @@ class Battle extends Component {
     if (this.state.playerMana > 0 ) {
       this.setState({playerMana});
       let heal = Math.floor(Math.random() * 100 % 4 + 1);
-      console.log('heal: ', heal);
       if (heal > 1) {
         if (this.state.playerHealth + 10 > 100) {
           this.setState({playerHealth: 100});
         }
         else {
-          console.log('healed!', this.state.playerHealth);
           h = true;
         }
       }
