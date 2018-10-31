@@ -16,7 +16,7 @@ class Battle extends Component {
     if (e !== 1 || this.state.enemyMana < 10 || this.state.enemyHealth > 90) {
       let damage = Math.floor(Math.random() * 100 % 7 + 1);
       if (this.state.playerHealth - damage <= 0) {
-        alert('You lose!');
+        alert('You lost!');
         this.setState({
           playerHealth: 100,
           playerMana: 100,
@@ -39,9 +39,9 @@ class Battle extends Component {
     }
     else {
       let heal = Math.floor(Math.random() * 100 % 10 + 1);
-      console.log('enemy hp', this.state.enemyHealth)
-      console.log('enemy heal', heal);
-      console.log('attacked', a);
+      console.log('[DEBUG] enemy hp', this.state.enemyHealth)
+      console.log('[DEBUG] enemy heal', heal);
+      console.log('[DEBUG] attacked', a);
       if (a !== -1) {
         this.setState({
           enemyHealth: this.state.enemyHealth + heal - a,
@@ -60,7 +60,7 @@ class Battle extends Component {
   attack() {
     let damage = Math.floor(Math.random() * 100 % 10 + 1);
     if(this.state.enemyHealth - damage <= 0) {
-      alert('You win!');
+      alert('You won!');
       this.setState({
         playerHealth: 100,
         playerMana: 100,
